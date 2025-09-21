@@ -1,16 +1,12 @@
-// MemberForm.tsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Member } from "./types"; // สมมติคุณมี type Member
 
 const MemberSchema = z.object({
   prefix: z.string().min(1, "จำเป็นต้องเลือกคำนำหน้า"),
   firstName: z.string().min(1, "กรุณากรอกชื่อ"),
   lastName: z.string().min(1, "กรุณากรอกนามสกุล"),
-  photo: z
-    .any()
-    .refine((file) => file?.length === 1, "กรุณาอัปโหลดรูปถ่าย 2 นิ้ว"),
+  photo: z.any().optional().refine((file) => !file || file.length === 1, "กรุณาอัปโหลดรูปถ่าย 2 นิ้ว"),
   workHistory: z.string().optional(),
   achievements: z.string().optional(),
   ministerRole: z.string().optional(),
@@ -36,10 +32,7 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
   });
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 p-4 max-w-xl mx-auto bg-white shadow rounded"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 max-w-xl mx-auto bg-white shadow rounded">
       <div>
         <label>คำนำหน้า</label>
         <select {...register("prefix")} className="w-full border rounded p-2">
