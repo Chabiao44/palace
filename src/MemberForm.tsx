@@ -29,7 +29,6 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<MemberFormData>({
     resolver: zodResolver(MemberSchema),
     defaultValues,
@@ -45,25 +44,22 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
           <option value="นาง">นาง</option>
           <option value="นางสาว">นางสาว</option>
         </select>
-        <p className="text-red-500">{errors.prefix?.message}</p>
       </div>
 
       <div>
         <label>ชื่อ</label>
         <input {...register("firstName")} className="w-full border rounded p-2" />
-        <p className="text-red-500">{errors.firstName?.message}</p>
       </div>
 
       <div>
         <label>นามสกุล</label>
         <input {...register("lastName")} className="w-full border rounded p-2" />
-        <p className="text-red-500">{errors.lastName?.message}</p>
+
       </div>
 
       <div>
         <label>รูปถ่าย 2 นิ้ว</label>
         <input type="file" {...register("photo")} className="w-full" />
-        <p className="text-red-500">{errors.photo?.message}</p>
       </div>
 
       <div>
@@ -89,7 +85,6 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
       <div>
         <label>สังกัดพรรคการเมือง</label>
         <input {...register("politicalParty")} className="w-full border rounded p-2" />
-        <p className="text-red-500">{errors.politicalParty?.message}</p>
       </div>
 
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
