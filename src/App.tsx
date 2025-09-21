@@ -17,9 +17,6 @@ type MemberFormData = {
 export default function App() {
   const [members, setMembers] = useState<MemberFormData[]>([]);
 
-  // สำหรับแก้ไข member เราจะเก็บ selectedMember
-  const [selectedMember, setSelectedMember] = useState<MemberFormData | undefined>(undefined);
-
   const handleAddMember = (data: MemberFormData) => {
     setMembers((prev) => [...prev, data]);
     console.log("Saved Member:", data);
@@ -31,7 +28,7 @@ export default function App() {
 
       <MemberForm
         onSubmit={handleAddMember}
-        defaultValues={selectedMember} // ส่ง undefined หรือ member ที่เลือก
+        defaultValues={undefined} // ส่ง undefined เลย
       />
 
       <h2 className="text-xl font-semibold mt-6">Saved Members</h2>
