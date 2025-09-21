@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-// Zod schema สำหรับตรวจสอบ form
+// Zod schema
 const MemberSchema = z.object({
   prefix: z.string().min(1, "จำเป็นต้องเลือกคำนำหน้า"),
   firstName: z.string().min(1, "กรุณากรอกชื่อ"),
@@ -19,10 +19,10 @@ const MemberSchema = z.object({
   politicalParty: z.string().min(1, "กรุณากรอกพรรคการเมือง"),
 });
 
-// type ของ form data
+// Type ของ form data
 type MemberFormData = z.infer<typeof MemberSchema>;
 
-// type ของ props
+// Props ของ MemberForm
 type MemberFormProps = {
   onSubmit: (data: MemberFormData) => void;
   defaultValues?: MemberFormData;
