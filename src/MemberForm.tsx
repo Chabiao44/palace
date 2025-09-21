@@ -1,8 +1,8 @@
 // MemberForm.tsx
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Member } from "./types"; // สมมติคุณมี type Member
 
 const MemberSchema = z.object({
   prefix: z.string().min(1, "จำเป็นต้องเลือกคำนำหน้า"),
@@ -20,21 +20,26 @@ const MemberSchema = z.object({
 
 type MemberFormData = z.infer<typeof MemberSchema>;
 
-export default function MemberForm() {
+type MemberFormProps = {
+  onSubmit: (data: MemberFormData) => void;
+  defaultValues?: MemberFormData;
+};
+
+export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<MemberFormData>({
     resolver: zodResolver(MemberSchema),
+    defaultValues,
   });
 
-  const onSubmit = (data: MemberFormData) => {
-    console.log(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 max-w-xl mx-auto bg-white shadow rounded">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 p-4 max-w-xl mx-auto bg-white shadow rounded"
+    >
       <div>
         <label>คำนำหน้า</label>
         <select {...register("prefix")} className="w-full border rounded p-2">
@@ -43,25 +48,25 @@ export default function MemberForm() {
           <option value="นาง">นาง</option>
           <option value="นางสาว">นางสาว</option>
         </select>
-        {errors.prefix && <p className="text-red-500">{errors.prefix.message}</p>}
+        {errors.prefix?.message && <p className="text-red-500">{errors.prefix.message}</p>}
       </div>
 
       <div>
         <label>ชื่อ</label>
         <input {...register("firstName")} className="w-full border rounded p-2" />
-        {errors.firstName && <p className="text-red-500">{errors.firstName.message}</p>}
+        {errors.firstName?.message && <p className="text-red-500">{errors.firstName.message}</p>}
       </div>
 
       <div>
         <label>นามสกุล</label>
         <input {...register("lastName")} className="w-full border rounded p-2" />
-        {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
+        {errors.lastName?.message && <p className="text-red-500">{errors.lastName.message}</p>}
       </div>
 
       <div>
         <label>รูปถ่าย 2 นิ้ว</label>
         <input type="file" {...register("photo")} className="w-full" />
-        {errors.photo && <p className="text-red-500">{errors.photo.message}</p>}
+        {errors.photo?.message && <p className="text-red-500">{errors.photo.message}</p>}
       </div>
 
       <div>
@@ -87,7 +92,7 @@ export default function MemberForm() {
       <div>
         <label>สังกัดพรรคการเมือง</label>
         <input {...register("politicalParty")} className="w-full border rounded p-2" />
-        {errors.politicalParty && <p className="text-red-500">{errors.politicalParty.message}</p>}
+        {errors.politicalParty?.message && <p className="text-red-500">{errors.politicalParty.message}</p>}
       </div>
 
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
