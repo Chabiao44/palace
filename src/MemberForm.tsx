@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-// สร้าง schema ด้วย Zod
+// Zod schema สำหรับตรวจสอบ form
 const MemberSchema = z.object({
   prefix: z.string().min(1, "จำเป็นต้องเลือกคำนำหน้า"),
   firstName: z.string().min(1, "กรุณากรอกชื่อ"),
@@ -69,7 +69,7 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
         {errors.lastName?.message && <p className="text-red-500">{errors.lastName.message}</p>}
       </div>
 
-      {/* รูปถ่าย */}
+      {/* รูปถ่าย 2 นิ้ว */}
       <div>
         <label>รูปถ่าย 2 นิ้ว</label>
         <input type="file" {...register("photo")} className="w-full" />
@@ -104,7 +104,9 @@ export default function MemberForm({ onSubmit, defaultValues }: MemberFormProps)
       <div>
         <label>สังกัดพรรคการเมือง</label>
         <input {...register("politicalParty")} className="w-full border rounded p-2" />
-        {errors.politicalParty?.message && <p className="text-red-500">{errors.politicalParty.message}</p>}
+        {errors.politicalParty?.message && (
+          <p className="text-red-500">{errors.politicalParty.message}</p>
+        )}
       </div>
 
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
